@@ -1,5 +1,5 @@
 import { Button, Stack } from "@mui/joy";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { LETTER_BG_COLORS } from "../../utils/get-letter-bg-colors";
 
 type GameKeyboardProps = {
@@ -34,19 +34,22 @@ export const GameKeyboard = ({
   const actionsSize = { width: { xs: 52, md: 62 }, height: 55 };
   const isKeyboardDisabled = isDisabled || hasPlayerGuessedCorrectly || hasPlayerReachedGuessLimit;
 
-  const handleOnLetterClick = (letter: string) => {
-    if (guess.length < 5) setGuess(prev => prev + letter);
-  };
+  const handleOnLetterClick = useCallback(
+    (letter: string) => {
+      if (guess.length < 5) setGuess(prev => prev + letter);
+    },
+    [guess.length, setGuess]
+  );
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     if (guess.length > 0) setGuess(prev => prev.slice(0, -1));
-  };
+  }, [guess.length, setGuess]);
 
-  const handleOnGuessSubmit = () => {
+  const handleOnGuessSubmit = useCallback(() => {
     if (guess.length === 5) {
       handleSubmitGuess(allowance);
     }
-  };
+  }, [allowance, guess.length, handleSubmitGuess]);
 
   // Handle showing letter statuses for virtual keyboard
   const getLetterStatusesForKeyboard = (guessesArray: string[], statusesArray: { data: number[] }[]) => {
@@ -116,7 +119,7 @@ export const GameKeyboard = ({
     return () => {
       window.removeEventListener("keydown", handleOnKeyClick);
     };
-  }, [guess, handleSubmitGuess, isKeyboardDisabled]);
+  }, [guess.length, handleDelete, handleOnGuessSubmit, isKeyboardDisabled, setGuess]);
 
   return (
     <Stack component="section" sx={{ justifyContent: "center", gap: 0.5, width: "100%" }}>

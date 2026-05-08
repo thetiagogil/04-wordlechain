@@ -1,7 +1,12 @@
 {
   "scripts": {
     "dev": "node scripts/script.dev.js",
-    "build": "node scripts/script.build.js"
+    "build": "node scripts/script.build.js",
+    "lint": "npm --prefix frontend run lint",
+    "format": "npm --prefix frontend run format",
+    "format:check": "npm --prefix frontend run format:check",
+    "check": "npm run format:check && npm run lint && npm --prefix frontend run build",
+    "check:contracts": "cd contract && forge fmt --check && forge test"
   },
   "devDependencies": {
     "@openzeppelin/contracts": "^5.1.0"

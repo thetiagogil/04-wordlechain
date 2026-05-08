@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { WordleGameABI } from "../abis/WordleGame.abi";
 import { useChainAddress } from "../utils/chains";
@@ -44,7 +44,7 @@ export const useSetWord = ({
         args: [newWord]
       });
       setHash(response);
-    } catch (err: any) {
+    } catch (err: unknown) {
       showToast("error", "Failed to set word. Please try again.");
       console.error(err);
       setIsLoading(false);
@@ -55,7 +55,7 @@ export const useSetWord = ({
   const { isSuccess: hasWaitedForWord, isError: hasWaitError } = useWaitForTransactionReceipt({ hash });
 
   // Handle refetch after setWord contract function has waited
-  const handleHasWaited = async () => {
+  const handleHasWaited = useCallback(async () => {
     if (!hash) {
       return;
     }
@@ -67,18 +67,25 @@ export const useSetWord = ({
       try {
         await Promise.all([refetchPlayerGuesses(), refetchHasPlayerGuessedCorrectly(), refetchLetterStatusesData()]);
         showToast("success", "Word set successfully!");
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(err);
         showToast("error", "Transaction failed while waiting for receipt.");
       } finally {
         setIsLoading(false);
       }
     }
-  };
+  }, [
+    hasWaitError,
+    hasWaitedForWord,
+    hash,
+    refetchHasPlayerGuessedCorrectly,
+    refetchLetterStatusesData,
+    refetchPlayerGuesses
+  ]);
 
   useEffect(() => {
     handleHasWaited();
-  }, [hasWaitedForWord, hasWaitError]);
+  }, [handleHasWaited]);
 
   return {
     handleSetWord,

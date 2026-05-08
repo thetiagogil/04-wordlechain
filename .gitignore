@@ -3,4 +3,14 @@
 .env.development
 .env.production
 
-node_modules
+node_modules/
+frontend/node_modules/
+
+# build outputs
+build/
+dist/
+frontend/dist/
+
+# Foundry outputs
+contract/cache/
+contract/out/

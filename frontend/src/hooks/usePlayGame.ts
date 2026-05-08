@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAccount, useReadContract, useReadContracts, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { WordleGameABI } from "../abis/WordleGame.abi";
 import { useChainAddress } from "../utils/chains";
@@ -87,7 +87,7 @@ export const usePlayGame = ({ guess, setGuess, refetchBalance, refetchAllowance 
         args: [guess]
       });
       setHash(response);
-    } catch (err: any) {
+    } catch (err: unknown) {
       showToast("error", "Failed to submit guess. Please try again.");
       console.error(err);
       setIsLoading(false);
@@ -98,7 +98,7 @@ export const usePlayGame = ({ guess, setGuess, refetchBalance, refetchAllowance 
   const { isSuccess: hasWaitedForGuess, isError: hasWaitError } = useWaitForTransactionReceipt({ hash });
 
   // Handle refetch after makeGuess contract function has waited
-  const handleHasWaited = async () => {
+  const handleHasWaited = useCallback(async () => {
     if (!hash) {
       return;
     }
@@ -117,18 +117,28 @@ export const usePlayGame = ({ guess, setGuess, refetchBalance, refetchAllowance 
           refetchAllowance(),
           refetchBalance()
         ]);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(err);
         showToast("error", "Transaction failed while waiting for receipt.");
       } finally {
         setIsLoading(false);
       }
     }
-  };
+  }, [
+    hasWaitError,
+    hasWaitedForGuess,
+    hash,
+    refetchAllowance,
+    refetchBalance,
+    refetchHasPlayerGuessedCorrectly,
+    refetchLetterStatusesData,
+    refetchPlayerGuesses,
+    setGuess
+  ]);
 
   useEffect(() => {
     handleHasWaited();
-  }, [hasWaitedForGuess, hasWaitError]);
+  }, [handleHasWaited]);
 
   return {
     handleSubmitGuess,

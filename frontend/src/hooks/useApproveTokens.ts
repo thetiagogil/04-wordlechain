@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { formatEther } from "viem";
 import { useAccount, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { WordleTokenABI } from "../abis/WordleToken.abi";
@@ -37,7 +37,7 @@ export const useApproveTokens = () => {
         args: [gameAddress, BigInt(5 * 10 ** 18)]
       });
       setHash(response);
-    } catch (err: any) {
+    } catch (err: unknown) {
       showToast("error", "Failed to approve tokens. Please try again.");
       console.error(err);
       setIsLoading(false);
@@ -48,7 +48,7 @@ export const useApproveTokens = () => {
   const { isSuccess: hasWaitedForApprove, isError: hasWaitError } = useWaitForTransactionReceipt({ hash });
 
   // Handle refetch after approve contract function has waited
-  const handleHasWaited = async () => {
+  const handleHasWaited = useCallback(async () => {
     if (!hash) {
       return;
     }
@@ -60,18 +60,18 @@ export const useApproveTokens = () => {
       try {
         await refetchAllowance();
         showToast("success", "Tokens approved successfully!");
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(err);
         showToast("error", "Transaction failed while waiting for receipt.");
       } finally {
         setIsLoading(false);
       }
     }
-  };
+  }, [hasWaitError, hasWaitedForApprove, hash, refetchAllowance]);
 
   useEffect(() => {
     handleHasWaited();
-  }, [hasWaitedForApprove, hasWaitError]);
+  }, [handleHasWaited]);
 
   return {
     handleApproveTokens,

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { formatEther } from "viem";
 import { useAccount, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { WordleTokenABI } from "../abis/WordleToken.abi";
@@ -36,7 +36,7 @@ export const useMintTokens = () => {
         functionName: "mintTokens"
       });
       setHash(response);
-    } catch (err: any) {
+    } catch (err: unknown) {
       showToast("error", "Error minting tokens.");
       console.error(err);
       setIsLoading(false);
@@ -47,7 +47,7 @@ export const useMintTokens = () => {
   const { isSuccess: hasWaitedForMint, isError: hasWaitError } = useWaitForTransactionReceipt({ hash });
 
   // Handle refetch after approve contract function has waited
-  const handleHasWaited = async () => {
+  const handleHasWaited = useCallback(async () => {
     if (!hash) {
       return;
     }
@@ -59,18 +59,18 @@ export const useMintTokens = () => {
       try {
         await refetchBalance();
         showToast("success", "Tokens minted successfully!");
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(err);
         showToast("error", "Transaction failed while waiting for receipt.");
       } finally {
         setIsLoading(false);
       }
     }
-  };
+  }, [hasWaitError, hasWaitedForMint, hash, refetchBalance]);
 
   useEffect(() => {
     handleHasWaited();
-  }, [hasWaitedForMint, hasWaitError]);
+  }, [handleHasWaited]);
 
   return {
     handleMintTokens,

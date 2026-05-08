@@ -1,6 +1,11 @@
 # Ignore artifacts:
-build
-coverage
+build/
+coverage/
 node_modules/
 dist/
 .vite/
+frontend/dist/
+contract/broadcast/
+contract/cache/
+contract/lib/
+contract/out/
