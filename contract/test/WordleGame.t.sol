@@ -151,6 +151,24 @@ contract WordleGameTest is Test {
 		}
 	}
 
+	function testGetLetterStatusesWithDuplicateLetters() public {
+		game.setWord("APPLE");
+
+		vm.prank(player);
+		game.makeGuess("ALLEY");
+
+		uint8[5] memory expectedStatuses = [2, 1, 0, 1, 0];
+		uint8[5] memory statuses = game.getLetterStatuses(player, 0);
+
+		for (uint256 i = 0; i < 5; i++) {
+			assertEq(
+				statuses[i],
+				expectedStatuses[i],
+				"Duplicate-letter status should match expected statuses"
+			);
+		}
+	}
+
 	// Test getting a player's guesses for a specific word
 	function testGetPlayerGuesses() public {
 		// Player makes multiple guesses

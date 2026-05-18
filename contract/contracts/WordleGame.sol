@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "./WordleToken.sol";
+import "./libraries/WordleScoring.sol";
 
 contract WordleGame {
 	address public token;
@@ -76,32 +77,8 @@ contract WordleGame {
 		);
 
 		string memory playerGuess = playerGuesses[wordId][player][guessIndex];
-		bytes memory guessBytes = bytes(playerGuess);
-		bytes memory wordBytes = bytes(word);
 
-		uint8[5] memory letterStatuses; // Array to store letter statuses
-		bool[5] memory matchedWordBytes; // Tracks whether a letter in the word has been matched
-
-		// First check: Check for correct letters in the correct positions
-		for (uint8 i = 0; i < 5; i++) {
-			// If correct letter and position, return 2
-			if (guessBytes[i] == wordBytes[i]) {
-				letterStatuses[i] = 2;
-				matchedWordBytes[i] = true;
-			} else {
-				// Second check: Check for correct letters in wrong positions
-				for (uint8 j = 0; j < 5; j++) {
-					// If correct letter but wrong position, return 1
-					if (!matchedWordBytes[j] && guessBytes[i] == wordBytes[j]) {
-						letterStatuses[i] = 1;
-						matchedWordBytes[j] = true;
-						break;
-					}
-				}
-			}
-		}
-
-		return letterStatuses;
+		return WordleScoring.score(bytes(word), bytes(playerGuess));
 	}
 
 	// Function to get all the player's guesses for the current word
