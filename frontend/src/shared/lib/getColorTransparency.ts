@@ -1,4 +1,7 @@
-export const getColorTransparency = (hex: string | undefined, percentage: number) => {
+export const getColorTransparency = (
+  hex: string | undefined,
+  percentage: number,
+) => {
   if (!hex?.startsWith("#")) hex = `#${hex}`;
   const alpha = Math.round((percentage / 100) * 255)
     .toString(16)

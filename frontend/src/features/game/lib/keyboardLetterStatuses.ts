@@ -1,6 +1,9 @@
 import { LetterStatusesByGuess } from "../types";
 
-export const getLetterStatusesForKeyboard = (guessesArray: string[], statusesArray: LetterStatusesByGuess) => {
+export const getLetterStatusesForKeyboard = (
+  guessesArray: string[],
+  statusesArray: LetterStatusesByGuess,
+) => {
   const letterStatuses = {} as { [key: string]: number };
 
   guessesArray.forEach((guess, guessIndex) => {

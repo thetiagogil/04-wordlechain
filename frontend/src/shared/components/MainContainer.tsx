@@ -10,7 +10,13 @@ export const MainContainer = ({ children }: Props) => {
     <Stack sx={{ width: "100%", alignItems: "center" }}>
       <Stack
         component="main"
-        sx={{ width: { xs: "92%", sm: 500 }, maxWidth: "100%", alignItems: "center", mt: 2, gap: 2 }}
+        sx={{
+          width: { xs: "92%", sm: 500 },
+          maxWidth: "100%",
+          alignItems: "center",
+          mt: 2,
+          gap: 2,
+        }}
       >
         {children}
       </Stack>

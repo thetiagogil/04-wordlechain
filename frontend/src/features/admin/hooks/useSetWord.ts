@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import {
+  useReadContract,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
 import { WordleGameABI } from "../../../lib/contracts/wordle-game.abi";
 import { useContractAddresses } from "../../../lib/contracts/useContractAddresses";
 import { showToast } from "../../../lib/toast";
@@ -15,12 +19,13 @@ type UseSetWordProps = {
 export const useSetWord = ({
   refetchPlayerGuesses,
   refetchHasPlayerGuessedCorrectly,
-  refetchLetterStatusesData
+  refetchLetterStatusesData,
 }: UseSetWordProps) => {
   const [hash, setHash] = useState<`0x${string}` | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { gameAddress, message: contractAddressMessage } = useContractAddresses();
+  const { gameAddress, message: contractAddressMessage } =
+    useContractAddresses();
   const { writeContractAsync } = useWriteContract();
 
   // Handle check admin address
@@ -28,13 +33,16 @@ export const useSetWord = ({
     abi: WordleGameABI,
     address: gameAddress,
     functionName: "admin",
-    query: { enabled: Boolean(gameAddress) }
+    query: { enabled: Boolean(gameAddress) },
   });
 
   // Handle set new word by admin
   const handleSetWord = async (newWord: string) => {
     if (!gameAddress) {
-      showToast("error", contractAddressMessage || "Game contract address is not configured.");
+      showToast(
+        "error",
+        contractAddressMessage || "Game contract address is not configured.",
+      );
       return;
     }
 
@@ -49,7 +57,7 @@ export const useSetWord = ({
         address: gameAddress,
         abi: WordleGameABI,
         functionName: "setWord",
-        args: [normalizeWord(newWord)]
+        args: [normalizeWord(newWord)],
       });
       setHash(response);
     } catch (err: unknown) {
@@ -60,7 +68,8 @@ export const useSetWord = ({
   };
 
   // Handle wait for make guess contract function receipt
-  const { isSuccess: hasWaitedForWord, isError: hasWaitError } = useWaitForTransactionReceipt({ hash });
+  const { isSuccess: hasWaitedForWord, isError: hasWaitError } =
+    useWaitForTransactionReceipt({ hash });
 
   // Handle refetch after setWord contract function has waited
   const handleHasWaited = useCallback(async () => {
@@ -73,7 +82,11 @@ export const useSetWord = ({
     }
     if (hasWaitedForWord) {
       try {
-        await Promise.all([refetchPlayerGuesses(), refetchHasPlayerGuessedCorrectly(), refetchLetterStatusesData()]);
+        await Promise.all([
+          refetchPlayerGuesses(),
+          refetchHasPlayerGuessedCorrectly(),
+          refetchLetterStatusesData(),
+        ]);
         showToast("success", "Word set successfully!");
       } catch (err: unknown) {
         console.error(err);
@@ -88,7 +101,7 @@ export const useSetWord = ({
     hash,
     refetchHasPlayerGuessedCorrectly,
     refetchLetterStatusesData,
-    refetchPlayerGuesses
+    refetchPlayerGuesses,
   ]);
 
   useEffect(() => {
@@ -99,6 +112,6 @@ export const useSetWord = ({
     handleSetWord,
     adminAddress,
     hasWaitedForWord,
-    isLoading
+    isLoading,
   };
 };

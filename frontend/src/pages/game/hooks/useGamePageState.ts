@@ -11,13 +11,19 @@ export const useGamePageState = () => {
 
   const { address: playerAddress, isConnected } = useWalletStatus();
   const contractAddresses = useContractAddresses();
-  const { handleMintTokens, balance, hasBalance, isLoading: isMinting, refetchBalance } = useMintTokens();
+  const {
+    handleMintTokens,
+    balance,
+    hasBalance,
+    isLoading: isMinting,
+    refetchBalance,
+  } = useMintTokens();
   const {
     handleApproveTokens,
     refetchAllowance,
     allowance,
     hasAllowance,
-    isLoading: isLoadingToken
+    isLoading: isLoadingToken,
   } = useApproveTokens();
   const {
     handleSubmitGuess,
@@ -29,13 +35,17 @@ export const useGamePageState = () => {
     hasPlayerGuessedCorrectly,
     hasPlayerReachedGuessLimit,
     isLoadingWordSubmit,
-    isLoadingWordStatus
+    isLoadingWordStatus,
   } = useGameState({ guess, setGuess, refetchBalance, refetchAllowance });
   const {
     handleSetWord,
     adminAddress,
-    isLoading: isLoadingNewWord
-  } = useSetWord({ refetchPlayerGuesses, refetchHasPlayerGuessedCorrectly, refetchLetterStatusesData });
+    isLoading: isLoadingNewWord,
+  } = useSetWord({
+    refetchPlayerGuesses,
+    refetchHasPlayerGuessedCorrectly,
+    refetchLetterStatusesData,
+  });
 
   const isDisabled =
     !isConnected ||
@@ -44,7 +54,12 @@ export const useGamePageState = () => {
     isLoadingToken ||
     isLoadingWordSubmit ||
     isLoadingWordStatus;
-  const isAdmin = Boolean(isConnected && playerAddress && adminAddress && playerAddress === adminAddress);
+  const isAdmin = Boolean(
+    isConnected &&
+      playerAddress &&
+      adminAddress &&
+      playerAddress === adminAddress,
+  );
 
   return {
     allowance,
@@ -67,6 +82,6 @@ export const useGamePageState = () => {
     isMinting,
     letterStatusesArray,
     playerGuessesArray,
-    setGuess
+    setGuess,
   };
 };

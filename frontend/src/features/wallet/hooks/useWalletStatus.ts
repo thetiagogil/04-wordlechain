@@ -5,6 +5,6 @@ export const useWalletStatus = () => {
 
   return {
     address,
-    isConnected
+    isConnected,
   };
 };

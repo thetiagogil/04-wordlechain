@@ -12,7 +12,7 @@ import { theme } from "../theme/theme";
 const rainbowkitConfig = getDefaultConfig({
   appName: "Wordlechain",
   projectId: env.PUBLIC_PROJECT_ID,
-  chains: supportedChains
+  chains: supportedChains,
 });
 
 const queryClient = new QueryClient();

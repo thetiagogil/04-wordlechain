@@ -5,10 +5,10 @@ export const WordleGameABI = [
       {
         name: "_token",
         type: "address",
-        internalType: "address"
-      }
+        internalType: "address",
+      },
     ],
-    stateMutability: "nonpayable"
+    stateMutability: "nonpayable",
   },
   {
     type: "function",
@@ -18,10 +18,10 @@ export const WordleGameABI = [
       {
         name: "",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -31,10 +31,10 @@ export const WordleGameABI = [
       {
         name: "",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -44,10 +44,10 @@ export const WordleGameABI = [
       {
         name: "",
         type: "address",
-        internalType: "address"
-      }
+        internalType: "address",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -56,17 +56,17 @@ export const WordleGameABI = [
       {
         name: "player",
         type: "address",
-        internalType: "address"
-      }
+        internalType: "address",
+      },
     ],
     outputs: [
       {
         name: "",
         type: "bool",
-        internalType: "bool"
-      }
+        internalType: "bool",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -75,22 +75,22 @@ export const WordleGameABI = [
       {
         name: "player",
         type: "address",
-        internalType: "address"
+        internalType: "address",
       },
       {
         name: "guessIndex",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
     outputs: [
       {
         name: "",
         type: "uint8[5]",
-        internalType: "uint8[5]"
-      }
+        internalType: "uint8[5]",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -99,17 +99,17 @@ export const WordleGameABI = [
       {
         name: "player",
         type: "address",
-        internalType: "address"
-      }
+        internalType: "address",
+      },
     ],
     outputs: [
       {
         name: "",
         type: "string[]",
-        internalType: "string[]"
-      }
+        internalType: "string[]",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -118,11 +118,11 @@ export const WordleGameABI = [
       {
         name: "playerGuess",
         type: "string",
-        internalType: "string"
-      }
+        internalType: "string",
+      },
     ],
     outputs: [],
-    stateMutability: "nonpayable"
+    stateMutability: "nonpayable",
   },
   {
     type: "function",
@@ -131,11 +131,11 @@ export const WordleGameABI = [
       {
         name: "_word",
         type: "string",
-        internalType: "string"
-      }
+        internalType: "string",
+      },
     ],
     outputs: [],
-    stateMutability: "nonpayable"
+    stateMutability: "nonpayable",
   },
   {
     type: "function",
@@ -145,10 +145,10 @@ export const WordleGameABI = [
       {
         name: "",
         type: "address",
-        internalType: "address"
-      }
+        internalType: "address",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -158,9 +158,9 @@ export const WordleGameABI = [
       {
         name: "",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
-    stateMutability: "view"
-  }
+    stateMutability: "view",
+  },
 ] as const;

@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { formatEther } from "viem";
-import { useAccount, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import {
+  useAccount,
+  useReadContract,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
 import { WordleTokenABI } from "../../../lib/contracts/wordle-token.abi";
 import { useContractAddresses } from "../../../lib/contracts/useContractAddresses";
 import { showToast } from "../../../lib/toast";
@@ -12,17 +17,24 @@ export const useApproveTokens = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { address: playerAddress } = useAccount();
-  const { tokenAddress, gameAddress, message: contractAddressMessage } = useContractAddresses();
+  const {
+    tokenAddress,
+    gameAddress,
+    message: contractAddressMessage,
+  } = useContractAddresses();
   const { writeContractAsync } = useWriteContract();
-  const canReadAllowance = Boolean(playerAddress && tokenAddress && gameAddress);
+  const canReadAllowance = Boolean(
+    playerAddress && tokenAddress && gameAddress,
+  );
 
   // Handle check allowance
   const { data: allowanceData, refetch: refetchAllowance } = useReadContract({
     abi: WordleTokenABI,
     address: tokenAddress,
     functionName: "allowance",
-    args: playerAddress && gameAddress ? [playerAddress, gameAddress] : undefined,
-    query: { enabled: canReadAllowance }
+    args:
+      playerAddress && gameAddress ? [playerAddress, gameAddress] : undefined,
+    query: { enabled: canReadAllowance },
   });
 
   const allowance = allowanceData ? Number(formatEther(allowanceData)) : 0;
@@ -33,7 +45,10 @@ export const useApproveTokens = () => {
   // Handle approve tokens
   const handleApproveTokens = async () => {
     if (!tokenAddress || !gameAddress) {
-      showToast("error", contractAddressMessage || "Contract addresses are not configured.");
+      showToast(
+        "error",
+        contractAddressMessage || "Contract addresses are not configured.",
+      );
       return;
     }
 
@@ -43,7 +58,7 @@ export const useApproveTokens = () => {
         abi: WordleTokenABI,
         address: tokenAddress,
         functionName: "approve",
-        args: [gameAddress, TOKEN_APPROVAL_AMOUNT]
+        args: [gameAddress, TOKEN_APPROVAL_AMOUNT],
       });
       setHash(response);
     } catch (err: unknown) {
@@ -54,7 +69,8 @@ export const useApproveTokens = () => {
   };
 
   // Handle wait for approve contract function receipt
-  const { isSuccess: hasWaitedForApprove, isError: hasWaitError } = useWaitForTransactionReceipt({ hash });
+  const { isSuccess: hasWaitedForApprove, isError: hasWaitError } =
+    useWaitForTransactionReceipt({ hash });
 
   // Handle refetch after approve contract function has waited
   const handleHasWaited = useCallback(async () => {
@@ -87,6 +103,6 @@ export const useApproveTokens = () => {
     refetchAllowance,
     allowance,
     hasAllowance,
-    isLoading
+    isLoading,
   };
 };

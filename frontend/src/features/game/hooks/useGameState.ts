@@ -9,7 +9,12 @@ type UseGameStateProps = {
   refetchAllowance: RefetchFn;
 };
 
-export const useGameState = ({ guess, setGuess, refetchBalance, refetchAllowance }: UseGameStateProps) => {
+export const useGameState = ({
+  guess,
+  setGuess,
+  refetchBalance,
+  refetchAllowance,
+}: UseGameStateProps) => {
   const gameReads = useGameReads();
   const submitGuess = useSubmitGuess({
     guess,
@@ -17,14 +22,15 @@ export const useGameState = ({ guess, setGuess, refetchBalance, refetchAllowance
     refetchBalance,
     refetchAllowance,
     refetchPlayerGuesses: gameReads.refetchPlayerGuesses,
-    refetchHasPlayerGuessedCorrectly: gameReads.refetchHasPlayerGuessedCorrectly,
+    refetchHasPlayerGuessedCorrectly:
+      gameReads.refetchHasPlayerGuessedCorrectly,
     refetchLetterStatusesData: gameReads.refetchLetterStatusesData,
     hasPlayerGuessedCorrectly: gameReads.hasPlayerGuessedCorrectly,
-    hasPlayerReachedGuessLimit: gameReads.hasPlayerReachedGuessLimit
+    hasPlayerReachedGuessLimit: gameReads.hasPlayerReachedGuessLimit,
   });
 
   return {
     ...gameReads,
-    ...submitGuess
+    ...submitGuess,
   };
 };

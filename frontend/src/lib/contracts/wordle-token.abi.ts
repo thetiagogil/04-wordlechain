@@ -5,10 +5,10 @@ export const WordleTokenABI = [
       {
         name: "initialSupply",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
-    stateMutability: "nonpayable"
+    stateMutability: "nonpayable",
   },
   {
     type: "function",
@@ -18,10 +18,10 @@ export const WordleTokenABI = [
       {
         name: "",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -31,10 +31,10 @@ export const WordleTokenABI = [
       {
         name: "",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -43,22 +43,22 @@ export const WordleTokenABI = [
       {
         name: "owner",
         type: "address",
-        internalType: "address"
+        internalType: "address",
       },
       {
         name: "spender",
         type: "address",
-        internalType: "address"
-      }
+        internalType: "address",
+      },
     ],
     outputs: [
       {
         name: "",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -67,22 +67,22 @@ export const WordleTokenABI = [
       {
         name: "spender",
         type: "address",
-        internalType: "address"
+        internalType: "address",
       },
       {
         name: "value",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
     outputs: [
       {
         name: "",
         type: "bool",
-        internalType: "bool"
-      }
+        internalType: "bool",
+      },
     ],
-    stateMutability: "nonpayable"
+    stateMutability: "nonpayable",
   },
   {
     type: "function",
@@ -91,17 +91,17 @@ export const WordleTokenABI = [
       {
         name: "account",
         type: "address",
-        internalType: "address"
-      }
+        internalType: "address",
+      },
     ],
     outputs: [
       {
         name: "",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -111,17 +111,17 @@ export const WordleTokenABI = [
       {
         name: "",
         type: "uint8",
-        internalType: "uint8"
-      }
+        internalType: "uint8",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
     name: "mintTokens",
     inputs: [],
     outputs: [],
-    stateMutability: "nonpayable"
+    stateMutability: "nonpayable",
   },
   {
     type: "function",
@@ -130,17 +130,17 @@ export const WordleTokenABI = [
       {
         name: "",
         type: "address",
-        internalType: "address"
-      }
+        internalType: "address",
+      },
     ],
     outputs: [
       {
         name: "",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -150,10 +150,10 @@ export const WordleTokenABI = [
       {
         name: "",
         type: "string",
-        internalType: "string"
-      }
+        internalType: "string",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -163,10 +163,10 @@ export const WordleTokenABI = [
       {
         name: "",
         type: "string",
-        internalType: "string"
-      }
+        internalType: "string",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -176,10 +176,10 @@ export const WordleTokenABI = [
       {
         name: "",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
-    stateMutability: "view"
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -188,22 +188,22 @@ export const WordleTokenABI = [
       {
         name: "to",
         type: "address",
-        internalType: "address"
+        internalType: "address",
       },
       {
         name: "value",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
     outputs: [
       {
         name: "",
         type: "bool",
-        internalType: "bool"
-      }
+        internalType: "bool",
+      },
     ],
-    stateMutability: "nonpayable"
+    stateMutability: "nonpayable",
   },
   {
     type: "function",
@@ -212,27 +212,27 @@ export const WordleTokenABI = [
       {
         name: "from",
         type: "address",
-        internalType: "address"
+        internalType: "address",
       },
       {
         name: "to",
         type: "address",
-        internalType: "address"
+        internalType: "address",
       },
       {
         name: "value",
         type: "uint256",
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
     outputs: [
       {
         name: "",
         type: "bool",
-        internalType: "bool"
-      }
+        internalType: "bool",
+      },
     ],
-    stateMutability: "nonpayable"
+    stateMutability: "nonpayable",
   },
   {
     type: "event",
@@ -242,22 +242,22 @@ export const WordleTokenABI = [
         name: "owner",
         type: "address",
         indexed: true,
-        internalType: "address"
+        internalType: "address",
       },
       {
         name: "spender",
         type: "address",
         indexed: true,
-        internalType: "address"
+        internalType: "address",
       },
       {
         name: "value",
         type: "uint256",
         indexed: false,
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
-    anonymous: false
+    anonymous: false,
   },
   {
     type: "event",
@@ -267,22 +267,22 @@ export const WordleTokenABI = [
         name: "from",
         type: "address",
         indexed: true,
-        internalType: "address"
+        internalType: "address",
       },
       {
         name: "to",
         type: "address",
         indexed: true,
-        internalType: "address"
+        internalType: "address",
       },
       {
         name: "value",
         type: "uint256",
         indexed: false,
-        internalType: "uint256"
-      }
+        internalType: "uint256",
+      },
     ],
-    anonymous: false
+    anonymous: false,
   },
   {
     type: "error",
@@ -291,19 +291,19 @@ export const WordleTokenABI = [
       {
         name: "spender",
         type: "address",
-        internalType: "address"
+        internalType: "address",
       },
       {
         name: "allowance",
         type: "uint256",
-        internalType: "uint256"
+        internalType: "uint256",
       },
       {
         name: "needed",
         type: "uint256",
-        internalType: "uint256"
-      }
-    ]
+        internalType: "uint256",
+      },
+    ],
   },
   {
     type: "error",
@@ -312,19 +312,19 @@ export const WordleTokenABI = [
       {
         name: "sender",
         type: "address",
-        internalType: "address"
+        internalType: "address",
       },
       {
         name: "balance",
         type: "uint256",
-        internalType: "uint256"
+        internalType: "uint256",
       },
       {
         name: "needed",
         type: "uint256",
-        internalType: "uint256"
-      }
-    ]
+        internalType: "uint256",
+      },
+    ],
   },
   {
     type: "error",
@@ -333,9 +333,9 @@ export const WordleTokenABI = [
       {
         name: "approver",
         type: "address",
-        internalType: "address"
-      }
-    ]
+        internalType: "address",
+      },
+    ],
   },
   {
     type: "error",
@@ -344,9 +344,9 @@ export const WordleTokenABI = [
       {
         name: "receiver",
         type: "address",
-        internalType: "address"
-      }
-    ]
+        internalType: "address",
+      },
+    ],
   },
   {
     type: "error",
@@ -355,9 +355,9 @@ export const WordleTokenABI = [
       {
         name: "sender",
         type: "address",
-        internalType: "address"
-      }
-    ]
+        internalType: "address",
+      },
+    ],
   },
   {
     type: "error",
@@ -366,8 +366,8 @@ export const WordleTokenABI = [
       {
         name: "spender",
         type: "address",
-        internalType: "address"
-      }
-    ]
-  }
+        internalType: "address",
+      },
+    ],
+  },
 ] as const;

@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { formatEther } from "viem";
-import { useAccount, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import {
+  useAccount,
+  useReadContract,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
 import { WordleTokenABI } from "../../../lib/contracts/wordle-token.abi";
 import { useContractAddresses } from "../../../lib/contracts/useContractAddresses";
 import { showToast } from "../../../lib/toast";
@@ -10,7 +15,8 @@ export const useMintTokens = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { address: playerAddress } = useAccount();
-  const { tokenAddress, message: contractAddressMessage } = useContractAddresses();
+  const { tokenAddress, message: contractAddressMessage } =
+    useContractAddresses();
   const { writeContractAsync } = useWriteContract();
   const canReadBalance = Boolean(playerAddress && tokenAddress);
 
@@ -20,7 +26,7 @@ export const useMintTokens = () => {
     address: tokenAddress,
     functionName: "balanceOf",
     args: playerAddress ? [playerAddress] : undefined,
-    query: { enabled: canReadBalance }
+    query: { enabled: canReadBalance },
   });
 
   const balance = balanceData ? Number(formatEther(balanceData)) : 0;
@@ -31,7 +37,10 @@ export const useMintTokens = () => {
   // Handle mint tokens
   const handleMintTokens = async () => {
     if (!tokenAddress) {
-      showToast("error", contractAddressMessage || "Token contract address is not configured.");
+      showToast(
+        "error",
+        contractAddressMessage || "Token contract address is not configured.",
+      );
       return;
     }
 
@@ -40,7 +49,7 @@ export const useMintTokens = () => {
       const response = await writeContractAsync({
         abi: WordleTokenABI,
         address: tokenAddress,
-        functionName: "mintTokens"
+        functionName: "mintTokens",
       });
       setHash(response);
     } catch (err: unknown) {
@@ -51,7 +60,8 @@ export const useMintTokens = () => {
   };
 
   // Handle wait for mint tokens contract function receipt
-  const { isSuccess: hasWaitedForMint, isError: hasWaitError } = useWaitForTransactionReceipt({ hash });
+  const { isSuccess: hasWaitedForMint, isError: hasWaitError } =
+    useWaitForTransactionReceipt({ hash });
 
   // Handle refetch after approve contract function has waited
   const handleHasWaited = useCallback(async () => {
@@ -84,6 +94,6 @@ export const useMintTokens = () => {
     refetchBalance,
     balance,
     hasBalance,
-    isLoading
+    isLoading,
   };
 };

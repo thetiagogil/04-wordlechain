@@ -13,13 +13,13 @@ export const useGameReads = () => {
   const {
     data: playerGuesses,
     refetch: refetchPlayerGuesses,
-    isLoading: isLoadingPlayerGuesses
+    isLoading: isLoadingPlayerGuesses,
   } = useReadContract({
     abi: WordleGameABI,
     address: gameAddress,
     functionName: "getPlayerGuesses",
     args: playerAddress ? [playerAddress] : undefined,
-    query: { enabled: canReadPlayerState }
+    query: { enabled: canReadPlayerState },
   });
 
   const playerGuessesArray = useMemo(() => {
@@ -29,13 +29,13 @@ export const useGameReads = () => {
   const {
     data: hasPlayerGuessedCorrectly,
     refetch: refetchHasPlayerGuessedCorrectly,
-    isLoading: isLoadingHasPlayerGuessedCorrectly
+    isLoading: isLoadingHasPlayerGuessedCorrectly,
   } = useReadContract({
     abi: WordleGameABI,
     address: gameAddress,
     functionName: "getHasPlayerGuessedCorrectly",
     args: playerAddress ? [playerAddress] : undefined,
-    query: { enabled: canReadPlayerState }
+    query: { enabled: canReadPlayerState },
   });
 
   const letterStatusesContracts =
@@ -46,22 +46,26 @@ export const useGameReads = () => {
               abi: WordleGameABI,
               address: gameAddress,
               functionName: "getLetterStatuses",
-              args: [playerAddress, BigInt(index)]
-            }) as const
+              args: [playerAddress, BigInt(index)],
+            }) as const,
         )
       : [];
 
   const {
     data: letterStatusesData,
     refetch: refetchLetterStatusesData,
-    isLoading: isLoadingLetterStatusesData
+    isLoading: isLoadingLetterStatusesData,
   } = useReadContracts({
     contracts: letterStatusesContracts,
-    query: { enabled: letterStatusesContracts.length > 0 }
+    query: { enabled: letterStatusesContracts.length > 0 },
   });
 
   const letterStatusesArray: LetterStatusesByGuess = useMemo(() => {
-    return letterStatusesData?.map(item => (item.result ? { data: Array.from(item.result) } : { data: [] })) || [];
+    return (
+      letterStatusesData?.map((item) =>
+        item.result ? { data: Array.from(item.result) } : { data: [] },
+      ) || []
+    );
   }, [letterStatusesData]);
 
   return {
@@ -72,6 +76,9 @@ export const useGameReads = () => {
     letterStatusesArray,
     hasPlayerGuessedCorrectly: Boolean(hasPlayerGuessedCorrectly),
     hasPlayerReachedGuessLimit: playerGuessesArray.length >= NUMBER_OF_GUESSES,
-    isLoadingWordStatus: isLoadingPlayerGuesses || isLoadingHasPlayerGuessedCorrectly || isLoadingLetterStatusesData
+    isLoadingWordStatus:
+      isLoadingPlayerGuesses ||
+      isLoadingHasPlayerGuessedCorrectly ||
+      isLoadingLetterStatusesData,
   };
 };

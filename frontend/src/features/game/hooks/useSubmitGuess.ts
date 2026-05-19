@@ -27,18 +27,22 @@ export const useSubmitGuess = ({
   refetchHasPlayerGuessedCorrectly,
   refetchLetterStatusesData,
   hasPlayerGuessedCorrectly,
-  hasPlayerReachedGuessLimit
+  hasPlayerReachedGuessLimit,
 }: UseSubmitGuessProps) => {
   const [hash, setHash] = useState<`0x${string}` | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { gameAddress, message: contractAddressMessage } = useContractAddresses();
+  const { gameAddress, message: contractAddressMessage } =
+    useContractAddresses();
   const { writeContractAsync } = useWriteContract();
 
   const handleSubmitGuess = useCallback(
     async (allowance: number) => {
       if (!gameAddress) {
-        showToast("error", contractAddressMessage || "Game contract address is not configured.");
+        showToast(
+          "error",
+          contractAddressMessage || "Game contract address is not configured.",
+        );
         return;
       }
       if (!isValidGuessWord(guess)) {
@@ -54,7 +58,10 @@ export const useSubmitGuess = ({
         return;
       }
       if (hasPlayerReachedGuessLimit) {
-        showToast("error", "You already reached the limit play tries for this word!");
+        showToast(
+          "error",
+          "You already reached the limit play tries for this word!",
+        );
         return;
       }
 
@@ -64,7 +71,7 @@ export const useSubmitGuess = ({
           address: gameAddress,
           abi: WordleGameABI,
           functionName: "makeGuess",
-          args: [normalizeWord(guess)]
+          args: [normalizeWord(guess)],
         });
         setHash(response);
       } catch (err: unknown) {
@@ -79,11 +86,12 @@ export const useSubmitGuess = ({
       guess,
       hasPlayerGuessedCorrectly,
       hasPlayerReachedGuessLimit,
-      writeContractAsync
-    ]
+      writeContractAsync,
+    ],
   );
 
-  const { isSuccess: hasWaitedForGuess, isError: hasWaitError } = useWaitForTransactionReceipt({ hash });
+  const { isSuccess: hasWaitedForGuess, isError: hasWaitError } =
+    useWaitForTransactionReceipt({ hash });
 
   const handleHasWaited = useCallback(async () => {
     if (!hash) {
@@ -102,7 +110,7 @@ export const useSubmitGuess = ({
           refetchHasPlayerGuessedCorrectly(),
           refetchLetterStatusesData(),
           refetchAllowance(),
-          refetchBalance()
+          refetchBalance(),
         ]);
       } catch (err: unknown) {
         console.error(err);
@@ -120,7 +128,7 @@ export const useSubmitGuess = ({
     refetchHasPlayerGuessedCorrectly,
     refetchLetterStatusesData,
     refetchPlayerGuesses,
-    setGuess
+    setGuess,
   ]);
 
   useEffect(() => {
@@ -130,6 +138,6 @@ export const useSubmitGuess = ({
   return {
     handleSubmitGuess,
     hasWaitedForGuess,
-    isLoadingWordSubmit: isLoading
+    isLoadingWordSubmit: isLoading,
   };
 };

@@ -13,10 +13,10 @@ export const theme = extendTheme({
       palette: {
         main: colors.main,
         background: {
-          body: colors.background
-        }
-      }
-    }
+          body: colors.background,
+        },
+      },
+    },
   },
   components: {
     JoyButton: {
@@ -28,10 +28,10 @@ export const theme = extendTheme({
           borderColor: theme.vars.palette.neutral[600],
           transition: "0.3s",
           ":hover": {
-            borderColor: "white"
-          }
-        })
-      }
+            borderColor: "white",
+          },
+        }),
+      },
     },
     JoyInput: {
       styleOverrides: {
@@ -41,10 +41,10 @@ export const theme = extendTheme({
           borderColor: theme.vars.palette.neutral[600],
           transition: "0.3s",
           ":hover": {
-            borderColor: "white"
-          }
-        })
-      }
-    }
-  }
+            borderColor: "white",
+          },
+        }),
+      },
+    },
+  },
 });

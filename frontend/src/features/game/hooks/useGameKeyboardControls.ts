@@ -14,17 +14,17 @@ export const useGameKeyboardControls = ({
   guess,
   handleSubmitGuess,
   isKeyboardDisabled,
-  setGuess
+  setGuess,
 }: UseGameKeyboardControlsProps) => {
   const handleOnLetterClick = useCallback(
     (letter: string) => {
-      if (guess.length < WORD_LENGTH) setGuess(prev => prev + letter);
+      if (guess.length < WORD_LENGTH) setGuess((prev) => prev + letter);
     },
-    [guess.length, setGuess]
+    [guess.length, setGuess],
   );
 
   const handleDelete = useCallback(() => {
-    if (guess.length > 0) setGuess(prev => prev.slice(0, -1));
+    if (guess.length > 0) setGuess((prev) => prev.slice(0, -1));
   }, [guess.length, setGuess]);
 
   const handleOnGuessSubmit = useCallback(() => {
@@ -36,16 +36,21 @@ export const useGameKeyboardControls = ({
   useEffect(() => {
     const handleOnKeyClick = (event: KeyboardEvent) => {
       if (isKeyboardDisabled) return;
-      if (document.activeElement && document.activeElement.tagName === "INPUT") return;
+      if (document.activeElement && document.activeElement.tagName === "INPUT")
+        return;
 
       const key = event.key.toUpperCase();
-      const isKeyValid = key.length === 1 && key >= "A" && key <= "Z" && guess.length < WORD_LENGTH;
+      const isKeyValid =
+        key.length === 1 &&
+        key >= "A" &&
+        key <= "Z" &&
+        guess.length < WORD_LENGTH;
       if (key === "BACKSPACE") {
         handleDelete();
       } else if (key === "ENTER") {
         handleOnGuessSubmit();
       } else if (isKeyValid) {
-        setGuess(prev => prev + key);
+        setGuess((prev) => prev + key);
       }
     };
 
@@ -54,11 +59,17 @@ export const useGameKeyboardControls = ({
     return () => {
       window.removeEventListener("keydown", handleOnKeyClick);
     };
-  }, [guess.length, handleDelete, handleOnGuessSubmit, isKeyboardDisabled, setGuess]);
+  }, [
+    guess.length,
+    handleDelete,
+    handleOnGuessSubmit,
+    isKeyboardDisabled,
+    setGuess,
+  ]);
 
   return {
     handleDelete,
     handleOnGuessSubmit,
-    handleOnLetterClick
+    handleOnLetterClick,
   };
 };

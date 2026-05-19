@@ -3,7 +3,11 @@ import { useMemo } from "react";
 import { useGameKeyboardControls } from "../hooks/useGameKeyboardControls";
 import { WORD_LENGTH } from "../lib/gameRules";
 import { getLetterStatusesForKeyboard } from "../lib/keyboardLetterStatuses";
-import { KEYBOARD_BOTTOM_ROW, KEYBOARD_MIDDLE_ROW, KEYBOARD_TOP_ROW } from "../lib/keyboardLayout";
+import {
+  KEYBOARD_BOTTOM_ROW,
+  KEYBOARD_MIDDLE_ROW,
+  KEYBOARD_TOP_ROW,
+} from "../lib/keyboardLayout";
 import { LETTER_BG_COLORS } from "../lib/letterStatus";
 import { LetterStatusesByGuess } from "../types";
 
@@ -11,7 +15,7 @@ const keyboardRowSx = {
   display: "grid",
   justifyContent: "center",
   gap: 0.5,
-  width: "100%"
+  width: "100%",
 };
 
 const letterButtonSx = {
@@ -22,13 +26,13 @@ const letterButtonSx = {
   p: 0,
   overflow: "hidden",
   fontSize: { xs: 12, sm: 14 },
-  fontWeight: "bold"
+  fontWeight: "bold",
 };
 
 const actionButtonSx = {
   ...letterButtonSx,
   fontSize: { xs: 10, sm: 13 },
-  whiteSpace: "nowrap"
+  whiteSpace: "nowrap",
 };
 
 type GameKeyboardProps = {
@@ -54,23 +58,29 @@ export const GameKeyboard = ({
   playerGuessesArray,
   letterStatusesArray,
   isLoadingWordSubmit,
-  isDisabled
+  isDisabled,
 }: GameKeyboardProps) => {
-  const isKeyboardDisabled = isDisabled || hasPlayerGuessedCorrectly || hasPlayerReachedGuessLimit;
-  const { handleDelete, handleOnGuessSubmit, handleOnLetterClick } = useGameKeyboardControls({
-    allowance,
-    guess,
-    handleSubmitGuess,
-    isKeyboardDisabled,
-    setGuess
-  });
+  const isKeyboardDisabled =
+    isDisabled || hasPlayerGuessedCorrectly || hasPlayerReachedGuessLimit;
+  const { handleDelete, handleOnGuessSubmit, handleOnLetterClick } =
+    useGameKeyboardControls({
+      allowance,
+      guess,
+      handleSubmitGuess,
+      isKeyboardDisabled,
+      setGuess,
+    });
 
   const letterStatusesForKeyboard = useMemo(() => {
-    return getLetterStatusesForKeyboard(playerGuessesArray, letterStatusesArray);
+    return getLetterStatusesForKeyboard(
+      playerGuessesArray,
+      letterStatusesArray,
+    );
   }, [playerGuessesArray, letterStatusesArray]);
 
   const letterButton = (letter: string) => {
-    const bgcolor = LETTER_BG_COLORS[letterStatusesForKeyboard[letter]] || "neutral.700";
+    const bgcolor =
+      LETTER_BG_COLORS[letterStatusesForKeyboard[letter]] || "neutral.700";
 
     return (
       <Button
@@ -81,7 +91,7 @@ export const GameKeyboard = ({
         sx={{
           ...letterButtonSx,
           bgcolor,
-          ":hover": { bgcolor, borderColor: "white" }
+          ":hover": { bgcolor, borderColor: "white" },
         }}
       >
         {letter}
@@ -90,14 +100,33 @@ export const GameKeyboard = ({
   };
 
   return (
-    <Stack component="section" sx={{ justifyContent: "center", gap: 0.5, width: "100%" }}>
-      <Stack sx={{ ...keyboardRowSx, gridTemplateColumns: "repeat(10, minmax(0, 1fr))" }}>
-        {KEYBOARD_TOP_ROW.map(letter => letterButton(letter))}
+    <Stack
+      component="section"
+      sx={{ justifyContent: "center", gap: 0.5, width: "100%" }}
+    >
+      <Stack
+        sx={{
+          ...keyboardRowSx,
+          gridTemplateColumns: "repeat(10, minmax(0, 1fr))",
+        }}
+      >
+        {KEYBOARD_TOP_ROW.map((letter) => letterButton(letter))}
       </Stack>
-      <Stack sx={{ ...keyboardRowSx, gridTemplateColumns: "repeat(9, minmax(0, 1fr))", px: { xs: 1.5, sm: 2 } }}>
-        {KEYBOARD_MIDDLE_ROW.map(letter => letterButton(letter))}
+      <Stack
+        sx={{
+          ...keyboardRowSx,
+          gridTemplateColumns: "repeat(9, minmax(0, 1fr))",
+          px: { xs: 1.5, sm: 2 },
+        }}
+      >
+        {KEYBOARD_MIDDLE_ROW.map((letter) => letterButton(letter))}
       </Stack>
-      <Stack sx={{ ...keyboardRowSx, gridTemplateColumns: "1.35fr repeat(7, minmax(0, 1fr)) 1.35fr" }}>
+      <Stack
+        sx={{
+          ...keyboardRowSx,
+          gridTemplateColumns: "1.35fr repeat(7, minmax(0, 1fr)) 1.35fr",
+        }}
+      >
         <Button
           onClick={handleDelete}
           color="neutral"
@@ -106,7 +135,7 @@ export const GameKeyboard = ({
         >
           Delete
         </Button>
-        {KEYBOARD_BOTTOM_ROW.map(letter => letterButton(letter))}
+        {KEYBOARD_BOTTOM_ROW.map((letter) => letterButton(letter))}
         <Button
           onClick={handleOnGuessSubmit}
           color="neutral"

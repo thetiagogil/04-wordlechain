@@ -8,7 +8,11 @@ type GameAdminPanelProps = {
   isDisabled: boolean;
 };
 
-export const GameAdminPanel = ({ handleSetWord, isLoadingNewWord, isDisabled }: GameAdminPanelProps) => {
+export const GameAdminPanel = ({
+  handleSetWord,
+  isLoadingNewWord,
+  isDisabled,
+}: GameAdminPanelProps) => {
   const [word, setWord] = useState<string>("");
 
   const handleOnButtonClick = () => {
@@ -19,11 +23,14 @@ export const GameAdminPanel = ({ handleSetWord, isLoadingNewWord, isDisabled }: 
   };
 
   return (
-    <Stack component="section" sx={{ flexDirection: "row", gap: 1, width: "100%" }}>
+    <Stack
+      component="section"
+      sx={{ flexDirection: "row", gap: 1, width: "100%" }}
+    >
       <Input
         placeholder="Enter a 5 letter word..."
         value={word}
-        onChange={e => setWord(normalizeWord(e.target.value))}
+        onChange={(e) => setWord(normalizeWord(e.target.value))}
         disabled={isDisabled}
         sx={{ width: "60%" }}
       />

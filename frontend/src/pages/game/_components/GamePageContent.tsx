@@ -29,16 +29,24 @@ export const GamePageContent = () => {
     isMinting,
     letterStatusesArray,
     playerGuessesArray,
-    setGuess
+    setGuess,
   } = useGamePageState();
 
   return (
     <>
       <WalletConnectButton />
       <GameStatusPanel message={contractAddresses.message} />
-      <GameGuessGrid guess={guess} playerGuessesArray={playerGuessesArray} letterStatusesArray={letterStatusesArray} />
+      <GameGuessGrid
+        guess={guess}
+        playerGuessesArray={playerGuessesArray}
+        letterStatusesArray={letterStatusesArray}
+      />
       {isAdmin && (
-        <GameAdminPanel handleSetWord={handleSetWord} isLoadingNewWord={isLoadingNewWord} isDisabled={isDisabled} />
+        <GameAdminPanel
+          handleSetWord={handleSetWord}
+          isLoadingNewWord={isLoadingNewWord}
+          isDisabled={isDisabled}
+        />
       )}
       <MintButton
         handleMintTokens={handleMintTokens}
