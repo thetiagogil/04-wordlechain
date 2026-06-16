@@ -1,4 +1,14 @@
+const { execSync } = require("child_process");
 const { log, runScript } = require("./helpers");
+
+const hasCommand = command => {
+  try {
+    execSync(`${command} --version`, { stdio: "ignore" });
+    return true;
+  } catch {
+    return false;
+  }
+};
 
 const scriptBuild = async () => {
   log("divider");
@@ -19,10 +29,17 @@ const scriptBuild = async () => {
 
   log("divider");
 
-  await runScript("cd contract && forge build", {
-    start: "Building contracts...",
-    success: "Contracts built successfully!"
-  });
+  if (hasCommand("forge")) {
+    await runScript("cd contract && forge build", {
+      start: "Building contracts...",
+      success: "Contracts built successfully!"
+    });
+  } else {
+    log(
+      "info",
+      "Skipping contract build because Foundry forge is not installed. Install Foundry and run npm run check:contracts to verify contracts."
+    );
+  }
 
   log("divider");
 

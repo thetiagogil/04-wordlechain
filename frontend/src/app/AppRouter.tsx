@@ -1,9 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { GamePage } from "../pages/game/GamePage";
+import { GamePage } from "./lazy-pages";
+import { RouteSuspense } from "./RouteSuspense";
 
 export const AppRouter = () => (
-  <Routes>
-    <Route path="/" element={<GamePage />} />
-    <Route path="*" element={<Navigate to={"/"} />} />
-  </Routes>
+  <RouteSuspense>
+    <Routes>
+      <Route path="/" element={<GamePage />} />
+      <Route path="*" element={<Navigate to={"/"} />} />
+    </Routes>
+  </RouteSuspense>
 );

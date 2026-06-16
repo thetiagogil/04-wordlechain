@@ -6,4 +6,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react()],
   envDir: resolve(__dirname, "../"),
+  build: {
+    target: "es2022",
+  },
 });
