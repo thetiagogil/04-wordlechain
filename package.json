@@ -5,8 +5,8 @@
     "lint": "npm --prefix frontend run lint",
     "format": "npm --prefix frontend run format",
     "format:check": "npm --prefix frontend run format:check",
-    "check": "npm run format:check && npm run lint && npm --prefix frontend run build",
-    "check:contracts": "cd contract && forge fmt --check && forge test"
+    "check": "npm run format:check && npm run lint && npm run check:contracts && npm --prefix frontend run build",
+    "check:contracts": "node scripts/script.check-contracts.js"
   },
   "devDependencies": {
     "@openzeppelin/contracts": "^5.1.0"

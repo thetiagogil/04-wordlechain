@@ -1,5 +1,20 @@
-const { exec, spawn } = require("child_process");
-require("dotenv").config({ path: require("path").resolve(__dirname, "../.env") });
+const { exec, execSync, spawn } = require("child_process");
+const os = require("os");
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
+
+const appendPath = directory => {
+  const delimiter = process.platform === "win32" ? ";" : ":";
+  const pathVariableName = process.platform === "win32" ? "Path" : "PATH";
+  const currentPath = process.env[pathVariableName] || "";
+  const pathParts = currentPath.split(delimiter).filter(Boolean);
+
+  if (!pathParts.includes(directory)) {
+    process.env[pathVariableName] = [directory, ...pathParts].join(delimiter);
+  }
+};
+
+appendPath(path.join(os.homedir(), ".foundry", "bin"));
 
 // Helper function for console logging
 const log = (type, message) => {
@@ -15,6 +30,14 @@ const log = (type, message) => {
   } else {
     console.log(`${prefix} - ${message}`);
     console.log(" ");
+  }
+};
+
+const requireCommand = command => {
+  try {
+    execSync(`${command} --version`, { stdio: "ignore" });
+  } catch {
+    throw new Error(`${command} is required for this project. Install Foundry and run the command again.`);
   }
 };
 
@@ -90,4 +113,4 @@ const runScript = (command, options = {}) => {
   });
 };
 
-module.exports = { log, runScript };
+module.exports = { log, requireCommand, runScript };
